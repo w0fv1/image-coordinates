@@ -6,7 +6,7 @@
 
 # 如何使用?
 
-1. 下载到本地, 或进入 `Github Page`
+1. 将index.html下载到本地, 或进入[image-coordinates GithubPage](https://wofbi.github.io/image-coordinates/)
 2. 在上方, 有`选择文件`按钮, 点击选择文件按钮选择文件.
 3. 点击`Set Background Image`按钮, 将图片设置到表格背景.
 4. 点击`Generate Image`按钮, 将坐标化的图片下载到本地.
