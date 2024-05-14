@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid with Background Image</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        #grid {
+            position: relative;
+            width: 3600px;
+            height: 3600px;
+            display: flex;
+            flex-wrap: wrap;
+            background-size: contain;
+            background-repeat: no-repeat;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+        }
+        .cell {
+            width: 100px;
+            height: 100px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            font-size: 22px;
+            color: rgba(0, 0, 0, 0.6);
+            padding: 2px;
+        }
+        #buttons {
+            margin-bottom: 20px;
+        }
+        button {
+            font-size: 32px;
+            margin: 0 10px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="buttons">
+        <input type="file" id="fileInput" accept="image/*">
+        <button onclick="setBackgroundImage()">Set Background Image</button>
+        <button onclick="generateImage()">Generate Image</button>
+    </div>
+    <div id="grid"></div>
+
+    <script>
+        const grid = document.getElementById('grid');
+        const fileInput = document.getElementById('fileInput');
+        const rows = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
+        const columns = 'abcdefghijklmnopqrstuvwxyz0123456789'.split('');
+
+        function createGrid() {
+            rows.forEach(row => {
+                columns.forEach(col => {
+                    const cell = document.createElement('div');
+                    cell.className = 'cell';
+                    cell.textContent = `(${col}, ${row})`;
+                    grid.appendChild(cell);
+                });
+            });
+        }
+
+        function setBackgroundImage() {
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    grid.style.backgroundImage = `url(${e.target.result})`;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function generateImage() {
+            html2canvas(grid).then(canvas => {
+                const link = document.createElement('a');
+                link.href = canvas.toDataURL();
+                link.download = 'grid-image.png';
+                link.click();
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', createGrid);
+    </script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</body>
+</html>
